@@ -48,6 +48,8 @@ class Category:
     return False
 
 def create_spend_chart(categories):
+  output = 'Percentage spent by category\n'
+
   spent_dict = {}
   for i in categories:
     s = 0 
@@ -56,10 +58,10 @@ def create_spend_chart(categories):
         s+= abs(j['amount'])
     spent_dict[i.name] = round(s,2)
   total = sum(spent_dict.values())
+  
   percent_dict = {}
   for k in spent_dict.keys():
     percent_dict[k] = int(round(spent_dict[k]/total,2)*100)
-  output = 'Percentage spent by category\n'
   for i in range(100,-10,-10):
     output += f'{i}'.rjust(3) + '| '
     for percent in percent_dict.values():
@@ -68,13 +70,14 @@ def create_spend_chart(categories):
       else:
         output+= '   '
     output += '\n' 
-  output += ' '*4+'-'*(len(percent_dict.values())*3+1)
+    
+  output += ' '*4 + '-'*(len(percent_dict.values())*3+1)
   output += '\n     '
+  
   dict_key_list = list(percent_dict.keys())
   max_len_category = max([len(i) for i in dict_key_list])
   
   for i in range(max_len_category):
-    
     for name in dict_key_list:
       if len(name)>i:
         output+= name[i] +'  '
